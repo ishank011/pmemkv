@@ -65,7 +65,15 @@ LIBPMEMKV_1.0 {
 		pmemkv_get_equal_above;
 		pmemkv_get_equal_below;
 		pmemkv_open;
+		pmemkv_lower_bound;
+		pmemkv_upper_bound;
+		pmemkv_get_begin;
 		pmemkv_put;
+		pmemkv_size;
+		pmemkv_get_val;
+		pmemkv_put_val;
+		pmemkv_get_next;
+		pmemkv_get_prev;
 		pmemkv_remove;
 	local:
 		*;

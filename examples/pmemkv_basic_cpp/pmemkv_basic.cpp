@@ -45,6 +45,18 @@ using namespace pmem::kv;
 
 const uint64_t SIZE = 1024UL * 1024UL * 1024UL;
 
+int f1(string_view k, string_view v) {
+                LOG(" Key visited: " << k.data());
+                LOG(" Value visited: " << v.data());
+                return 0;
+}
+
+int f2(string_view k, string_view v) {
+                LOG(" Hey Key visited: " << k.data());
+                LOG(" Hey Value visited: " << v.data());
+                return 0;
+}
+
 int main(int argc, char *argv[])
 {
 	if (argc < 2) {
@@ -66,7 +78,7 @@ int main(int argc, char *argv[])
 	LOG("Opening pmemkv database with 'cmap' engine");
 	db *kv = new db();
 	assert(kv != nullptr);
-	s = kv->open("cmap", std::move(cfg));
+	s = kv->open("stree", std::move(cfg));
 	assert(s == status::OK);
 
 	LOG("Putting new key");
@@ -83,22 +95,59 @@ int main(int argc, char *argv[])
 	assert(s == status::OK && value == "value1");
 
 	LOG("Iterating existing keys");
-	kv->put("key2", "value2");
+	s = kv->put("key2", "value2");
 	kv->put("key3", "value3");
+	kv->put("key4", "value4");
+	kv->put("key5", "value5");
+	kv->put("key6", "value6");
+	kv->put("key7", "value7");
+	kv->put("key8", "value8");
+	kv->put("key9", "value9");
+	kv->put("key10", "value10");
+	kv->put("key11", "value11");
+	kv->put("key12", "value12");
+	kv->put("key13", "value13");
+	kv->put("key14", "value14");
+	kv->put("key15", "value15");
+	kv->put("key16", "value16");
+	kv->put("key17", "value17");
+	kv->put("key18", "value18");
+	
+	//kv->get_all(f1);
 	kv->get_all([](string_view k, string_view v) {
-		LOG("  visited: " << k.data());
+		LOG(" Key visited: " << k.data());
+		LOG(" Value visited: " << v.data());
 		return 0;
 	});
+	/*
+	kv->get_above("key5", f2);
 
-	LOG("Defragmenting the database");
-	s = kv->defrag(0, 100);
-	assert(s == status::OK);
+	s = kv->upper_bound("key9", &value);
+	assert(s == status::NOT_FOUND);
+	std::cout << value;
+
+	s = kv->upper_bound("key12", &value);
+	assert(value == "key13");
+	*/
+	/*s = kv->get_next("key15", &value);
+	assert(value == "key16");*/
+	
+	std::pair<string_view, string_view> a = kv->upper_bound("key6");
+	std::cout << a.first.data() << " " << a.second.data();
+
+	std::pair<string_view, string_view> b = kv->lower_bound("key9");
+	std::cout << b.first.data() << " " << b.second.data();
+
+	std::pair<string_view, string_view> c = kv->get_begin();
+	std::cout << c.first.data() << " " << c.second.data();
 
 	LOG("Removing existing key");
 	s = kv->remove("key1");
 	assert(s == status::OK);
 	s = kv->exists("key1");
 	assert(s == status::NOT_FOUND);
+
+	kv->get_all(f1);
 
 	LOG("Closing database");
 	delete kv;

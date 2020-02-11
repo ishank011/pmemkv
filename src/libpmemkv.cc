@@ -500,9 +500,35 @@ int pmemkv_defrag(pmemkv_db *db, double start_percent, double amount_percent)
 	});
 }
 
+std::pair<pmem::kv::string_view, pmem::kv::string_view> pmemkv_upper_bound(pmemkv_db *db, pmem::kv::string_view k)
+{
+	return db_to_internal(db)->upper_bound(k);
+}
+
+std::pair<pmem::kv::string_view, pmem::kv::string_view> pmemkv_lower_bound(pmemkv_db *db, pmem::kv::string_view k)
+{
+	return db_to_internal(db)->lower_bound(k);
+}
+
+std::pair<pmem::kv::string_view, pmem::kv::string_view> pmemkv_get_begin(pmemkv_db *db)
+{
+	return db_to_internal(db)->get_begin();
+}
+
+std::pair<pmem::kv::string_view, pmem::kv::string_view> pmemkv_get_next(pmemkv_db *db, pmem::kv::string_view k)
+{
+	return db_to_internal(db)->get_next(k);
+}
+
+std::pair<pmem::kv::string_view, pmem::kv::string_view> pmemkv_get_prev(pmemkv_db *db, pmem::kv::string_view k)
+{
+	return db_to_internal(db)->get_prev(k);
+}
+
 const char *pmemkv_errormsg(void)
 {
 	return out_get_errormsg();
 }
 
 } /* extern "C" */
+

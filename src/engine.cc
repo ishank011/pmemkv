@@ -211,6 +211,31 @@ status engine_base::get_below(string_view key, get_kv_callback *callback, void *
 	return status::NOT_SUPPORTED;
 }
 
+std::pair<string_view, string_view> engine_base::upper_bound(string_view key)
+{
+	return std::make_pair("", "");
+}
+
+std::pair<string_view, string_view> engine_base::lower_bound(string_view key)
+{
+	return std::make_pair("", "");
+}
+
+std::pair<string_view, string_view> engine_base::get_begin()
+{
+	return std::make_pair("", "");
+}
+
+std::pair<string_view, string_view> engine_base::get_next(string_view key)
+{
+	return std::make_pair("", "");
+}
+
+std::pair<string_view, string_view> engine_base::get_prev(string_view key)
+{
+	return std::make_pair("", "");
+}
+
 status engine_base::get_between(string_view key1, string_view key2,
 				get_kv_callback *callback, void *arg)
 {

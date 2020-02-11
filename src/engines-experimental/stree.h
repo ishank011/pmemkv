@@ -81,7 +81,11 @@ public:
 	status get_below(string_view key, get_kv_callback *callback, void *arg) final;
 	status get_between(string_view key1, string_view key2, get_kv_callback *callback,
 			   void *arg) final;
-
+	std::pair<string_view, string_view> upper_bound(string_view key) final;
+	std::pair<string_view, string_view> lower_bound(string_view key) final;
+	std::pair<string_view, string_view> get_begin() final;
+	std::pair<string_view, string_view> get_next(string_view key) final;
+	std::pair<string_view, string_view> get_prev(string_view key) final;
 	status exists(string_view key) final;
 
 	status get(string_view key, get_v_callback *callback, void *arg) final;

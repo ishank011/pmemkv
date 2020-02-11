@@ -159,6 +159,72 @@ status stree::count_between(string_view key1, string_view key2, std::size_t &cnt
 	return status::OK;
 }
 
+std::pair<string_view, string_view> stree::upper_bound(string_view key)
+{
+	LOG("upper_bound");
+	check_outside_tx();
+	internal::stree::btree_type::iterator it = my_btree->upper_bound(
+		pstring<internal::stree::MAX_KEY_SIZE>(key.data(), key.size()));
+	if (it == my_btree->end()) {
+		return std::make_pair("", "");
+	}
+	return std::make_pair(string_view(it->first.c_str(), it->first.size()), 
+	                      string_view(it->second.c_str(), it->second.size()));
+}
+
+std::pair<string_view, string_view> stree::lower_bound(string_view key)
+{
+	LOG("lower_bound");
+	check_outside_tx();
+	internal::stree::btree_type::iterator it = my_btree->lower_bound(
+		pstring<internal::stree::MAX_KEY_SIZE>(key.data(), key.size()));
+	if (it == my_btree->end()) {
+		return std::make_pair("", "");
+	}
+	return std::make_pair(string_view(it->first.c_str(), it->first.size()), 
+	                      string_view(it->second.c_str(), it->second.size()));
+}
+
+std::pair<string_view, string_view> stree::get_begin()
+{
+	LOG("begin");
+	check_outside_tx();
+	internal::stree::btree_type::iterator it = my_btree->begin();
+	if (it == my_btree->end()) {
+		return std::make_pair("", "");
+	}
+	return std::make_pair(string_view(it->first.c_str(), it->first.size()), 
+	                      string_view(it->second.c_str(), it->second.size()));
+}
+
+std::pair<string_view, string_view> stree::get_next(string_view key)
+{
+	LOG("get_next");
+	check_outside_tx();
+	internal::stree::btree_type::iterator it = my_btree->find(
+		pstring<internal::stree::MAX_KEY_SIZE>(key.data(), key.size()));
+	if (it == my_btree->end()) {
+		return std::make_pair("", "");
+	}
+	it++;
+	return std::make_pair(string_view(it->first.c_str(), it->first.size()), 
+	                      string_view(it->second.c_str(), it->second.size()));
+}
+
+std::pair<string_view, string_view> stree::get_prev(string_view key)
+{
+	LOG("get_prev");
+	check_outside_tx();
+	internal::stree::btree_type::iterator it = my_btree->find(
+		pstring<internal::stree::MAX_KEY_SIZE>(key.data(), key.size()));
+	if (it == my_btree->begin() || it == my_btree->end()) {
+		return std::make_pair("", "");
+	}
+	it++;
+	return std::make_pair(string_view(it->first.c_str(), it->first.size()), 
+	                      string_view(it->second.c_str(), it->second.size()));
+}
+
 status stree::get_all(get_kv_callback *callback, void *arg)
 {
 	LOG("get_all");
