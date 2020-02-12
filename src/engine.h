@@ -81,6 +81,7 @@ public:
 	virtual std::pair<string_view, string_view> get_begin();
 	virtual std::pair<string_view, string_view> get_next(string_view key);
 	virtual std::pair<string_view, string_view> get_prev(string_view key);
+	virtual int get_size_new();
 	virtual status exists(string_view key);
 
 	virtual status get(string_view key, get_v_callback *callback, void *arg) = 0;

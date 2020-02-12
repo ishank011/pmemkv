@@ -525,6 +525,10 @@ std::pair<pmem::kv::string_view, pmem::kv::string_view> pmemkv_get_prev(pmemkv_d
 	return db_to_internal(db)->get_prev(k);
 }
 
+int pmemkv_get_size_new(pmemkv_db *db)
+{
+	return db_to_internal(db)->get_size_new();
+}
 const char *pmemkv_errormsg(void)
 {
 	return out_get_errormsg();

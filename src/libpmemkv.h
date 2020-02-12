@@ -231,6 +231,7 @@ std::pair<pmem::kv::string_view, pmem::kv::string_view> pmemkv_lower_bound(struc
 std::pair<pmem::kv::string_view, pmem::kv::string_view> pmemkv_get_begin(struct pmemkv_db *db);
 std::pair<pmem::kv::string_view, pmem::kv::string_view> pmemkv_get_next(struct pmemkv_db *db, pmem::kv::string_view k);
 std::pair<pmem::kv::string_view, pmem::kv::string_view> pmemkv_get_prev(struct pmemkv_db *db, pmem::kv::string_view k);
+int pmemkv_get_size_new(struct pmemkv_db *db);
 
 int pmemkv_get(pmemkv_db *db, const char *k, size_t kb, pmemkv_get_v_callback *c,
 	       void *arg);

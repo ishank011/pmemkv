@@ -220,9 +220,16 @@ std::pair<string_view, string_view> stree::get_prev(string_view key)
 	if (it == my_btree->begin() || it == my_btree->end()) {
 		return std::make_pair("", "");
 	}
-	it++;
+	it--;
 	return std::make_pair(string_view(it->first.c_str(), it->first.size()), 
 	                      string_view(it->second.c_str(), it->second.size()));
+}
+
+int stree::get_size_new()
+{
+	LOG("get_size");
+	check_outside_tx();
+	return std::distance(my_btree->begin(), my_btree->end());
 }
 
 status stree::get_all(get_kv_callback *callback, void *arg)

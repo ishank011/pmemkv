@@ -1020,7 +1020,8 @@ public:
 			leaf_node_ptr tmp = current_node->get_prev().get();
 			if (tmp) {
 				current_node = tmp;
-				leaf_it = current_node->last();
+				leaf_it = current_node->end();
+				--leaf_it;
 			}
 		} else {
 			--leaf_it;

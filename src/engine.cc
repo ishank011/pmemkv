@@ -236,6 +236,11 @@ std::pair<string_view, string_view> engine_base::get_prev(string_view key)
 	return std::make_pair("", "");
 }
 
+int engine_base::get_size_new()
+{
+	return -1;
+}
+
 status engine_base::get_between(string_view key1, string_view key2,
 				get_kv_callback *callback, void *arg)
 {

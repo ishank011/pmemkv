@@ -247,6 +247,7 @@ public:
 	std::pair<string_view, string_view> get_begin() noexcept;
 	std::pair<string_view, string_view> get_next(string_view key) noexcept;
 	std::pair<string_view, string_view> get_prev(string_view key) noexcept;
+	int get_size_new() noexcept;
 
 	status exists(string_view key) noexcept;
 
@@ -1101,6 +1102,11 @@ inline std::pair<string_view, string_view> db::get_next(string_view key) noexcep
 inline std::pair<string_view, string_view> db::get_prev(string_view key) noexcept
 {
 	return pmemkv_get_prev(this->_db, key);
+}
+
+inline int db::get_size_new() noexcept
+{
+	return pmemkv_get_size_new(this->_db);
 }
 
 /**
